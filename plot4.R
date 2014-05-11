@@ -1,0 +1,26 @@
+##Import and prepare data
+data <- read.table("D:/csra/IN_PROGRESS/Exploratory Analysis/assign1/exdata-data-household_power_consumption/household_power_consumption.txt", sep=";",header=TRUE)
+data$Date <- as.Date(data$Date, "%d/%m/%Y")
+data$Time <- strptime(paste(data$Date,data$Time), "%Y-%m-%d %H:%M:%S")
+d_feb <- subset(data, data$Date <= as.Date("2007-02-02") & data$Date >= as.Date("2007-02-01"))
+##Convert datatype for variables from factor to numeric
+d_feb$Global_active_power <- as.numeric(as.character(d_feb$Global_active_power))
+d_feb$Global_reactive_power <- as.numeric(as.character(d_feb$Global_reactive_power))
+d_feb$Voltage <- as.numeric(as.character(d_feb$Voltage))
+d_feb$Global_intensity <- as.numeric(as.character(d_feb$Global_intensity))
+d_feb$Sub_metering_1 <- as.numeric(as.character(d_feb$Sub_metering_1))
+d_feb$Sub_metering_2 <- as.numeric(as.character(d_feb$Sub_metering_2))
+d_feb$Sub_metering_3 <- as.numeric(as.character(d_feb$Sub_metering_3))
+
+##Plot graph 4
+png(file = "D:/csra/IN_PROGRESS/Exploratory Analysis/assign1/plot4.png", width = 480, height = 480, units = "px", pointsize = 12, bg = "transparent",  res = NA)
+par(mfrow = c(2,2))
+par(mar = c(4,4,4,2))
+plot(d_feb$Time,d_feb$Global_active_power,type="l", xlab="", ylab="Global Active Power", main="", cex.lab=1)
+plot(d_feb$Time,d_feb$Voltage,type="l", xlab="datetime", ylab="Voltage", main="", cex.lab=1)
+plot(d_feb$Time,d_feb$Sub_metering_1,type="l", xlab="", ylab="Energy sub metering", main="" , cex.lab=1)
+lines(d_feb$Time,d_feb$Sub_metering_2,col="Red")
+lines(d_feb$Time,d_feb$Sub_metering_3,col="Blue")
+legend("topright", legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), col=c("Black","Red", "Blue"), lwd=1, cex=.9, bty="n")
+plot(d_feb$Time,d_feb$Global_reactive_power,type="l", xlab="datetime", ylab="Global_reactive_power", main="", cex.lab=1)
+dev.off()

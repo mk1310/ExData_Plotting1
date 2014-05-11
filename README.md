@@ -1,3 +1,5 @@
+### IMPORTANT -- KINDLY REFER TO PLOTS.md FILE FOR PLOTS
+
 ## Introduction
 
 This assignment uses data from
